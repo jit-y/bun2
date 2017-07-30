@@ -1,18 +1,11 @@
 defmodule Bun2 do
   @moduledoc """
-  Documentation for Bun2.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Bun2.hello
-      :world
 
   """
-  def hello do
-    :world
+
+  use Application
+
+  def start(_type, _args) do
+    Bun2.Supervisor.start_link()
   end
 end
