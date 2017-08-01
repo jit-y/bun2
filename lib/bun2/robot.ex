@@ -8,7 +8,6 @@ defmodule Bun2.Robot do
   end
 
   def init(state) do
-    IO.puts "aaaaa"
     {:ok, state}
   end
 end

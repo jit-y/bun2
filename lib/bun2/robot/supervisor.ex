@@ -1,4 +1,4 @@
-defmodule Bun2.Rubot.Supervisor do
+defmodule Bun2.Robot.Supervisor do
   @moduledoc false
   use Supervisor
 
