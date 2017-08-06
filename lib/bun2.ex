@@ -6,6 +6,6 @@ defmodule Bun2 do
   use Application
 
   def start(_type, _args) do
-    Bun2.Supervisor.start_link()
+    Bun2.Supervisor.start_link
   end
 end

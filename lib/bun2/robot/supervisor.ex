@@ -2,8 +2,8 @@ defmodule Bun2.Robot.Supervisor do
   @moduledoc false
   use Supervisor
 
-  def start_link(opts \\ []) do
-    Supervisor.start_link(__MODULE__, [], opts)
+  def start_link(_opts) do
+    Supervisor.start_link(__MODULE__, [], name: __MODULE__)
   end
 
   def init(_) do
