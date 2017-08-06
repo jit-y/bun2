@@ -14,6 +14,7 @@ defmodule Bun2.Mixfile do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      mod: {Bun2, []},
       extra_applications: [:logger]
     ]
   end
