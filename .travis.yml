@@ -1,7 +1,9 @@
 language: elixir
 elixir:
-  - 1.5.0
+- 1.5.0
 otp_release:
-  - 20.0
+- 20.0
 notifications:
   email: false
+  slack:
+    secure: annpyX7LH7FdXoYhy+ZAloUJxiEbanBH55v5LQJ06Ek0n0pXClOKoP7sDvcA+SKihJQpJ9rfnVYZSpkhpmAF6JBV/tqnF5yhpF+IPWk5JD55wu9b8RRqBcYWAn8zj9pTjVQdOrt2YwNPrJJp9JHlPhd4OMboQxqtHnf2Bghdybh6RbYzYNOPUpqKgXMquQdreLHlTcAwNFL1bJ0mm1VmMLrUtcEdxsfMy+BS6IODSzdQ2dMEceG3u+CWci0Gv27gspmpGwyohmbA1DEjYLHXhHLCSJNsdrj0UFVFhxL+rq8Pr3mGSWCfLbNi6zK0uDYpPDag2TPAzUc35NLm5AaOOqSqV2NpQz+MHnLoQncoyVH6N3AHPq3qf7EACsuGRt4MVhfrP7VpCrckJgO5GQ5MGQpTLnoQ7Bvku7pnzOFpfxh+FUtKvMTDI+dvRbcOcbzvR6wxj6JiP59Rr5nR0e/8VLi8YQ6Hz5OlQsFh1n6jLw8idRcr8o0A29wSSAHtlsfGUG4gDU1zarIfOgcWzaZZYeaQSbUoyaa/qoIGfnkzU0711RH7i3e6ug2hgXdqpszeMw+SiQ6PLCr1gwWQrwipQ+HzxBW+oJsGrdRGvbQ60mxekoEPNi0y77/WKBGH3JcNPhI9Zw/rwel9CVWxncbBF1vUEEop7shn8rqU778lbeg=

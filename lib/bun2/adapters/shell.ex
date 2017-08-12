@@ -28,7 +28,7 @@ defmodule Bun2.Adapters.Shell do
   end
 
   def handle_info(text, %{conn: conn} = state) when is_binary(text) do
-    send(conn, {:message, String.trim(text)})
+    Bun2.Robot.deliver(conn, String.trim(text))
     Process.sleep(500)
     GenServer.cast(self(), :gets)
     {:noreply, state}

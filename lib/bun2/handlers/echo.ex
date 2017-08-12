@@ -1,16 +1,12 @@
 defmodule Bun2.Handlers.Echo do
-  use GenServer
+  use Bun2.Handler
 
-  def start_link() do
-    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  incoming ~r/ping/, msg, %{robot: robot} do
+    send robot, {:reply, %{text: "pong"}}
   end
 
-  def init([]) do
-    {:ok, %{}}
-  end
-
-  def handle_info({:message, %{text: text, robot: robot}}, state) do
-    send(robot, {:reply, %{text: text}})
+  def handle_info({:dispatch, %{msg: msg, robot: robot}}, state) do
+    send(robot, {:reply, %{text: msg}})
     {:noreply, state}
   end
 end
