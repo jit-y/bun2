@@ -14,7 +14,7 @@ defmodule Bun2.Robot do
 
   def init(_state) do
     {:ok, adapter} = Bun2.Adapters.Shell.start_link()
-    {:ok, handler} = Bun2.Handlers.Echo.start_link()
+    {:ok, handler} = Bun2.Handlers.Ping.start_link()
     {:ok, %Bun2.Robot{adapter: adapter, handler: handler}}
   end
 
