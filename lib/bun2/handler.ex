@@ -31,6 +31,10 @@ defmodule Bun2.Handler do
         GenServer.start_link(__MODULE__, %{robot: self()}, name: __MODULE__)
       end
 
+      def reply(text) do
+        GenServer.cast(self(), {:reply, text})
+      end
+
       def init(%{robot: robot}) do
         GenServer.cast(self(), :setup_responses)
         {:ok, %{robot: robot, responses: []}}
@@ -52,6 +56,11 @@ defmodule Bun2.Handler do
             apply(__MODULE__, function_name, [new_msg, state])
           end
         end
+        {:noreply, state}
+      end
+
+      def handle_cast({:reply, text}, %{robot: robot} = state) do
+        Bun2.Robot.reply(robot, %{text: text})
         {:noreply, state}
       end
 
