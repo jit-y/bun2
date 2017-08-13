@@ -3,9 +3,7 @@ defmodule Bun2.Robot do
   """
   use GenServer
   defstruct adapter: nil,
-            handler: nil,
-            adapter_mod: nil,
-            handler_mod: nil
+            handler: nil
 
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts)
@@ -39,15 +37,10 @@ defmodule Bun2.Robot do
          {:ok, handler_mod} <- Application.fetch_env(:bun2, :handler),
          {:ok, adapter} <- adapter_mod.start_link(),
          {:ok, handler} <- handler_mod.start_link() do
-          {:noreply, %Bun2.Robot{state | adapter: adapter, handler: handler, adapter_mod: adapter_mod, handler_mod: handler_mod}}
+          {:noreply, %Bun2.Robot{state | adapter: adapter, handler: handler}}
     else
       :error -> {:stop, {:incorrect_config, "Adapter and Handler modules are not set correctly in config files"}, state}
       _ -> {:stop, :normal, "Error has occuered."}
     end
-  end
-
-  def handle_info({:message, text}, %Bun2.Robot{handler: handler} = state) when is_binary(text) do
-    send(handler, {:message, %{text: text, robot: self()}})
-    {:noreply, state}
   end
 end
