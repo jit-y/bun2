@@ -31,6 +31,10 @@ defmodule Bun2.Handler do
         GenServer.start_link(__MODULE__, %{robot: self()}, name: __MODULE__)
       end
 
+      def receive(handler, msg) do
+        GenServer.cast(handler, {:dispatch, msg})
+      end
+
       def reply(text) do
         GenServer.cast(self(), {:reply, text})
       end
@@ -49,7 +53,7 @@ defmodule Bun2.Handler do
         {:noreply, %{state | responses: @incoming}}
       end
 
-      def handle_cast({:respond, %{msg: text} = msg}, %{responses: responses} = state) do
+      def handle_cast({:dispatch, %{msg: text} = msg}, %{responses: responses} = state) do
         Enum.each responses, fn {regex, function_name} ->
           if Regex.match?(regex, text) do
             new_msg = Map.put(msg, :matches, find_matches(regex, text))
