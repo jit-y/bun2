@@ -5,6 +5,10 @@ defmodule Bun2.Adapters.Shell do
     GenServer.start_link(__MODULE__, %{conn: self()}, name: __MODULE__)
   end
 
+  def receive(adapter, msg) do
+    GenServer.cast(adapter, {:read, msg})
+  end
+
   def init(opts) do
     GenServer.cast(self(), :after_init)
     GenServer.cast(self(), :gets)
@@ -21,6 +25,11 @@ defmodule Bun2.Adapters.Shell do
     {:noreply, state}
   end
 
+  def handle_cast({:read, %{text: text}}, state) do
+    IO.puts text
+    {:noreply, state}
+  end
+
   def handle_cast(:gets, state) do
     me = self()
     Task.start fn -> send(me, gets()) end
@@ -31,11 +40,6 @@ defmodule Bun2.Adapters.Shell do
     Bun2.Robot.deliver(conn, String.trim(text))
     Process.sleep(500)
     GenServer.cast(self(), :gets)
-    {:noreply, state}
-  end
-
-  def handle_info({:reply, %{text: text}}, state) do
-    IO.puts text
     {:noreply, state}
   end
 
