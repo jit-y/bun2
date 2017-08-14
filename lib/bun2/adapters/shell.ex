@@ -1,13 +1,5 @@
 defmodule Bun2.Adapters.Shell do
-  use GenServer
-
-  def start_link do
-    GenServer.start_link(__MODULE__, %{conn: self()}, name: __MODULE__)
-  end
-
-  def receive(adapter, msg) do
-    GenServer.cast(adapter, {:read, msg})
-  end
+  use Bun2.Adapter
 
   def init(opts) do
     GenServer.cast(self(), :after_init)
@@ -17,7 +9,7 @@ defmodule Bun2.Adapters.Shell do
 
   def handle_cast(:after_init, state) do
     message = """
-    start
+    propmt start!
     """
     message
     |> IO.ANSI.format()
@@ -36,8 +28,8 @@ defmodule Bun2.Adapters.Shell do
     {:noreply, state}
   end
 
-  def handle_info(text, %{conn: conn} = state) when is_binary(text) do
-    Bun2.Robot.deliver(conn, String.trim(text))
+  def handle_info(text, %{robot: robot} = state) when is_binary(text) do
+    deliver(robot, String.trim(text))
     Process.sleep(500)
     GenServer.cast(self(), :gets)
     {:noreply, state}
