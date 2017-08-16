@@ -1,4 +1,6 @@
 defmodule Bun2.Adapters.Shell do
+  @moduledoc """
+  """
   use Bun2.Adapter
 
   def init(opts) do

@@ -23,6 +23,7 @@ defmodule Bun2.Handler do
     end
   end
 
+  # credo:disable-for-next-line
   defmacro __before_compile__(_env) do
     quote location: :keep do
       use GenServer

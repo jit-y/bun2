@@ -21,6 +21,9 @@ defmodule Bun2.Mixfile do
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
-    []
+    [
+      {:credo, "~> 0.8.6", only: :dev},
+      {:exfmt, "~> 0.4.0", only: :dev},
+    ]
   end
 end
