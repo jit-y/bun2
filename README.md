@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/jit-y/bun2.png?label=ready&title=Ready)](https://waffle.io/jit-y/bun2?utm_source=badge)
 # Bun2
 [![Build Status](https://travis-ci.org/jit-y/bun2.svg?branch=master)](https://travis-ci.org/jit-y/bun2)
 **TODO: Add description**
