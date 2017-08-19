@@ -28,8 +28,8 @@ defmodule Bun2.Handler do
     quote location: :keep do
       use GenServer
 
-      def start_link do
-        GenServer.start_link(__MODULE__, %{robot: self()}, name: __MODULE__)
+      def start_link(opts) do
+        GenServer.start_link(__MODULE__, opts, name: __MODULE__)
       end
 
       def receive(handler, msg) do

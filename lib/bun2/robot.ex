@@ -3,9 +3,9 @@ defmodule Bun2.Robot do
   """
   use GenServer
   defstruct adapter: nil,
-            handler: nil,
             adapter_mod: nil,
-            handler_mod: nil
+            handler_sup: nil,
+            handlers: []
 
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts)
@@ -15,8 +15,8 @@ defmodule Bun2.Robot do
     GenServer.cast(robot, {:deliver, %{msg: msg, robot: self()}})
   end
 
-  def reply(pid, text) do
-    GenServer.cast(pid, {:reply, text})
+  def reply(robot, text) do
+    GenServer.cast(robot, {:reply, text})
   end
 
   def init(_opts) do
@@ -24,8 +24,9 @@ defmodule Bun2.Robot do
     {:ok, %Bun2.Robot{}}
   end
 
-  def handle_cast({:deliver, msg}, %Bun2.Robot{handler_mod: handler_mod, handler: handler} = state) do
-    handler_mod.receive(handler, msg)
+  def handle_cast({:deliver, msg}, %Bun2.Robot{handlers: handlers} = state) do
+    handlers
+    |> Enum.each(fn({mod, pid, _, _}) -> mod.receive(pid, msg) end)
     {:noreply, state}
   end
 
@@ -36,10 +37,10 @@ defmodule Bun2.Robot do
 
   def handle_cast(:setup, state) do
     with {:ok, adapter_mod} <- Application.fetch_env(:bun2, :adapter),
-         {:ok, handler_mod} <- Application.fetch_env(:bun2, :handler),
          {:ok, adapter} <- adapter_mod.start_link(),
-         {:ok, handler} <- handler_mod.start_link() do
-          {:noreply, %Bun2.Robot{state | adapter: adapter, handler: handler, adapter_mod: adapter_mod, handler_mod: handler_mod}}
+         {:ok, handler_sup} <- Bun2.Handler.Supervisor.start_link(),
+         handlers <- Supervisor.which_children(handler_sup) do
+          {:noreply, %Bun2.Robot{state | adapter: adapter, adapter_mod: adapter_mod, handler_sup: handler_sup, handlers: handlers}}
     else
       :error -> {:stop, {:incorrect_config, "Adapter and Handler modules are not set correctly in config files"}, state}
       _ -> {:stop, :normal, "Error has occuered."}
