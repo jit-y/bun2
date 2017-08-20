@@ -1,8 +1,8 @@
 defmodule Bun2.Handler.Supervisor do
   @moduledoc """
   """
-  def start_link do
-    Supervisor.start_link(__MODULE__, %{robot: self()}, name: __MODULE__)
+  def start_link(%{name: name}) do
+    Supervisor.start_link(__MODULE__, %{robot: self(), name: name}, name: __MODULE__)
   end
 
   def init(opts) do

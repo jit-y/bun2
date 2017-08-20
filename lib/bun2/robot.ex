@@ -12,7 +12,7 @@ defmodule Bun2.Robot do
   end
 
   def deliver(robot, msg) do
-    GenServer.cast(robot, {:deliver, %{msg: msg, robot: self()}})
+    GenServer.cast(robot, {:deliver, %{message: msg, robot: self()}})
   end
 
   def reply(robot, text) do
@@ -38,7 +38,8 @@ defmodule Bun2.Robot do
   def handle_cast(:setup, state) do
     with {:ok, adapter_mod} <- Application.fetch_env(:bun2, :adapter),
          {:ok, adapter} <- adapter_mod.start_link(),
-         {:ok, handler_sup} <- Bun2.Handler.Supervisor.start_link(),
+         {:ok, name} <- Application.fetch_env(:bun2, :name),
+         {:ok, handler_sup} <- Bun2.Handler.Supervisor.start_link(%{name: name}),
          handlers <- Supervisor.which_children(handler_sup) do
           {:noreply, %Bun2.Robot{state | adapter: adapter, adapter_mod: adapter_mod, handler_sup: handler_sup, handlers: handlers}}
     else
