@@ -31,6 +31,7 @@ defmodule Bun2.Mixfile do
     [
       {:credo, "~> 0.8.6", only: :dev},
       {:exfmt, "~> 0.4.0", only: :dev},
+      {:ex_doc, ">= 0.0.0", only: :dev},
     ]
   end
 
