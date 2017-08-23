@@ -1,4 +1,5 @@
 defmodule Bun2.Mixfile do
+  @moduledoc false
   use Mix.Project
 
   def project do
@@ -6,8 +7,13 @@ defmodule Bun2.Mixfile do
       app: :bun2,
       version: "0.1.0",
       elixir: "~> 1.5",
+      build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
+      description: description(),
+      package: package(),
       deps: deps(),
+      name: "Bun2",
+      source_url: "https://github.com/jit-y/bun2",
       elixirc_paths: elixirc_paths(Mix.env)
     ]
   end
@@ -25,6 +31,18 @@ defmodule Bun2.Mixfile do
     [
       {:credo, "~> 0.8.6", only: :dev},
       {:exfmt, "~> 0.4.0", only: :dev},
+    ]
+  end
+
+  defp description do
+    "A Bot Framework written in Elixir"
+  end
+
+  defp package do
+    [
+      files: ["lib", "mix.exs", "README*"],
+      maintainers: ["Yuji Takahashi"],
+      links: %{"GitHub" => "https://github.com/jit-y/bun2"}
     ]
   end
 
