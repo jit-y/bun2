@@ -40,8 +40,9 @@ defmodule Bun2.Mixfile do
 
   defp package do
     [
-      files: ["lib", "mix.exs", "README*"],
+      files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Yuji Takahashi"],
+      licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/jit-y/bun2"}
     ]
   end
