@@ -1,5 +1,6 @@
 # Bun2
 [![Build Status](https://travis-ci.org/jit-y/bun2.svg?branch=master)](https://travis-ci.org/jit-y/bun2)
+[![Hex.pm](https://img.shields.io/hexpm/v/bun2.svg?style=flat-square)](https://hex.pm/packages/bun2)
 
 **TODO: Add description**
 
